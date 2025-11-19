@@ -6,7 +6,29 @@
 ## 🎯 Sobre o Projeto
 
 Este é um protótipo de sistema de ponto de venda (POS) e gestão de fluxo de usuários desenvolvido em **Python** e **Flask**. Ele simula o painel de um totem de autoatendimento para um lava-rápido, permitindo ao usuário selecionar pacotes e efetuar pagamentos, enquanto o administrador monitora as vendas em um Dashboard protegido por senha.
+## 🧠 Arquitetura do Sistema (Mapa Mental)
 
+```mermaid
+mindmap
+  root((Totem Lava Rápido))
+    Backend (Python/Flask)
+      Lógica de Negócio
+      Controle de Sessão
+      Integração com Hardware
+    Frontend (HTML/CSS/JS)
+      Interface do Cliente (Touch)
+      Interface do Box (Timer Gigante)
+      Dashboard Admin
+    Hardware (IoT)
+      Raspberry Pi 4
+      Módulo Relé 4 Canais
+      Sensores/Atuadores
+    Banco de Dados
+      SQLite (Histórico de Vendas)
+    Funcionalidades Extras
+      Geração de PDF (ReportLab)
+      QR Code Dinâmico (Pix)
+```
 ## ✨ Funcionalidades Principais
 
 * **Fluxo UX Completo:** Navegação por 6 telas (Boas-vindas, Seleção, Baia, Pagamento, Confirmação, Recibo).
