@@ -5,6 +5,9 @@ import qrcode
 import io
 import threading
 import time
+# ... outros imports ...
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
 
 # ... (Imports do GPIO e Classe Falsa continuam iguais) ...
 try:
@@ -238,6 +241,55 @@ def receipt():
 
 
 # ... (Rotas de Admin e Login mantidas iguais) ...
+# --- NOVA ROTA: GERAR PDF ---
+@app.route("/baixar_recibo")
+def baixar_recibo():
+    # 1. Cria um arquivo na memória (não no disco)
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer, pagesize=A4)
 
+    # 2. Dados da Venda (da sessão)
+    servico = session.get('servico_nome', 'Serviço Avulso')
+    valor = session.get('servico_valor', 0.0)
+    baia = session.get('baia_escolhida', 0)
+    data_hoje = datetime.now().strftime("%d/%m/%Y %H:%M")
+
+    # 3. Desenhando o PDF (Coordenadas X, Y - O Y=0 é o fundo da página)
+    p.setTitle(f"Recibo - {servico}")
+
+    # Cabeçalho
+    p.setFont("Helvetica-Bold", 20)
+    p.drawString(200, 800, "LAVA RÁPIDO SELF-SERVICE")
+
+    p.setFont("Helvetica", 12)
+    p.drawString(200, 780, "Comprovante de Pagamento")
+    p.line(100, 770, 500, 770) # Linha divisória
+
+    # Detalhes
+    p.setFont("Helvetica-Bold", 14)
+    p.drawString(100, 730, f"SERVIÇO: {servico}")
+
+    p.setFont("Helvetica", 12)
+    p.drawString(100, 700, f"DATA: {data_hoje}")
+    p.drawString(100, 680, f"LOCAL: Baia {baia}")
+    p.drawString(100, 660, "MÉTODO: Pagamento Digital / Totem")
+
+    # Total
+    p.line(100, 630, 500, 630)
+    p.setFont("Helvetica-Bold", 25)
+    p.drawString(100, 590, f"TOTAL: R$ {valor:.2f}")
+
+    # Rodapé
+    p.setFont("Helvetica-Oblique", 10)
+    p.drawString(100, 500, "Obrigado pela preferência!")
+    p.drawString(100, 485, "Visite: lorcanaru.pythonanywhere.com")
+
+    # 4. Finaliza o PDF
+    p.showPage()
+    p.save()
+
+    # 5. Envia para o navegador baixar
+    buffer.seek(0)
+    return send_file(buffer, as_attachment=True, download_name=f"Recibo_LavaRapido_{datetime.now().strftime('%Y%m%d')}.pdf", mimetype='application/pdf')
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
