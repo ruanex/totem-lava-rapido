@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cronômetro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #status-text {
+            font-size: 3rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        #timer-display {
+            font-size: 12rem; /* GIGANTE */
+            font-weight: bold;
+            color: #00e676; /* Verde Neon */
+            text-shadow: 0 0 40px rgba(0, 230, 118, 0.5);
+        }
+
+        /* Quando estiver livre */
+        .livre #timer-display { display: none; }
+        .livre #status-text { font-size: 6rem; color: #00e676; animation: piscar 2s infinite; }
+
+        /* Quando estiver acabando (menos de 1 min) */
+        .alerta #timer-display { color: #ff1744; text-shadow: 0 0 40px rgba(255, 23, 68, 0.5); }
+
+        @keyframes piscar {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="livre">
+
+    <div id="status-text">LIVRE</div>
+    <div id="timer-display">00:00</div>
+
+    <script>
+        function atualizarTimer() {
+            // Pergunta ao servidor o status atual
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    const body = document.body;
+                    const display = document.getElementById('timer-display');
+                    const status = document.getElementById('status-text');
+
+                    if (data.ativo) {
+                        body.classList.remove('livre');
+
+                        // Formata segundos em MM:SS
+                        let m = Math.floor(data.segundos / 60);
+                        let s = Math.floor(data.segundos % 60);
+                        let textoTime = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+
+                        display.innerText = textoTime;
+                        status.innerText = "EM USO: " + data.servico;
+
+                        // Fica vermelho se faltar menos de 60 segundos
+                        if (data.segundos < 60) {
+                            body.classList.add('alerta');
+                        } else {
+                            body.classList.remove('alerta');
+                        }
+
+                    } else {
+                        body.classList.add('livre');
+                        body.classList.remove('alerta');
+                        status.innerText = "BOX LIVRE";
+                        display.innerText = "00:00";
+                    }
+                })
+                .catch(err => console.error("Erro ao conectar:", err));
+        }
+
+        // Roda a cada 1 segundo
+        setInterval(atualizarTimer, 1000);
+        atualizarTimer(); // Roda a primeira vez imediatamente
+    </script>
+</body>
+</html>
