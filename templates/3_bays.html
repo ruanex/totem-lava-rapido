@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Escolha a Baia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Onde está seu carro?</h2>
+        <p>Selecione o número da baia</p>
+
+        <div class="grid-baias">
+            {% for num, ocupada in baias.items() %}
+                {% if ocupada %}
+                    <div class="baia-box ocupada">
+                        BAIA {{ num }}<br><span style="font-size:0.6em">OCUPADA</span>
+                    </div>
+                {% else %}
+                    <a href="/salvar_baia/{{ num }}" class="baia-box livre">
+                        BAIA {{ num }}<br><span style="font-size:0.6em">LIVRE</span>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <a href="/selecao" class="btn-zao btn-voltar">Voltar</a>
+    </div>
+</body>
+</html>

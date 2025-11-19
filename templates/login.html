@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Administrativo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h1>🔒 Área Restrita</h1>
+        <p>Apenas para funcionários autorizados.</p>
+
+        <form action="/login" method="POST" style="margin-top: 20px;">
+            <label for="senha" style="text-align: left; display: block;">Senha de Acesso:</label>
+            <input type="password" name="senha" placeholder="Digite a senha..." required style="margin-bottom: 20px;">
+
+            {% if erro %}
+                <p style="color: #ff1744; font-weight: bold; background: rgba(255,23,68,0.1); padding: 10px; border-radius: 5px;">
+                    {{ erro }}
+                </p>
+            {% endif %}
+
+            <button type="submit" class="btn-zao btn-start">ENTRAR</button>
+        </form>
+
+        <a href="/" class="btn-zao btn-voltar" style="margin-top: 20px; font-size: 1rem; padding: 15px;">Voltar ao Início</a>
+    </div>
+</body>
+</html>

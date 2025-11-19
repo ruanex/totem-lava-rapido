@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
+
+:root {
+    --cor-fundo: #1a1a1a; /* Fundo escuro para contraste */
+    --cor-primaria: #00e676; /* Verde neon (Ação) */
+    --cor-secundaria: #2979ff; /* Azul brilhante (Seleção) */
+    --cor-ocupado: #ff1744; /* Vermelho (Erro/Ocupado) */
+    --cor-card: #333333;
+    --texto-branco: #ffffff;
+}
+
+body { font-family: 'Montserrat', sans-serif;
+
+    /* IMAGEM DE FUNDO */
+    background-image: url('fundo.jpg');
+    background-size: cover;      /* Cobre todo o ecrã */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* A imagem fica parada ao fazer scroll */
+
+    /* Cor de fundo de segurança (caso a imagem não carregue) */
+    background-color: #1a1a1a;
+
+    color: var(--texto-branco);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    /* TRUQUE PROFISSIONAL:
+       Sombra interior para escurecer a imagem e melhorar a leitura */
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.7);
+}
+
+h1 { font-size: 2.5rem; margin-bottom: 10px; }
+p { font-size: 1.2rem; color: #ccc; }
+
+/* Container principal para centralizar tudo */
+.container {
+    width: 90%;
+    max-width: 800px;
+}
+
+/* BOTÕES GIGANTES (Totem Style) */
+.btn-zao {
+    display: block;
+    width: 100%;
+    padding: 25px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 20px;
+    text-decoration: none; /* Para links parecerem botões */
+}
+
+.btn-start { background-color: var(--cor-primaria); color: #000; }
+.btn-opcao { background-color: var(--cor-secundaria); color: #fff; margin-bottom: 15px;}
+.btn-voltar { background-color: transparent; border: 2px solid #666; color: #888; margin-top: 40px;}
+
+.btn-zao:active { transform: scale(0.95); }
+
+/* GRIDS (Para pacotes e baias) */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-baias { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+
+/* CARDS DE SERVIÇO */
+.card-servico {
+    background-color: var(--cor-card);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: left;
+    cursor: pointer;
+}
+.card-servico h3 { color: var(--cor-primaria); margin: 0 0 10px 0;}
+.preco-grande { font-size: 2rem; font-weight: bold; display: block; margin-top: 10px;}
+
+/* BAIAS */
+.baia-box {
+    padding: 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+}
+.livre { background-color: var(--cor-primaria); color: black; }
+.ocupada { background-color: var(--cor-ocupado); opacity: 0.5; pointer-events: none; }
+
+/* TELA DE PAGAMENTO */
+.pagamento-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 30px;}
+.btn-pag { background-color: #fff; color: #000; padding: 40px 10px; border-radius: 10px; font-weight: bold; border: none; cursor: pointer;}
+.qr-code-img { width: 200px; margin: 20px auto; display: block; background: white; padding: 10px;}
+/* --- ESTILOS DA NOVA TELA DE PAGAMENTO --- */
+
+/* 1. Cabeçalho do Ticket (Resumo) */
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.1); /* Vidro escuro */
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.label { font-size: 0.8rem; color: #aaa; letter-spacing: 1px; margin-bottom: 5px; }
+.sub-label { font-size: 0.9rem; color: #ccc; margin-top: 5px; }
+
+.payment-info h3 { margin: 0; font-size: 1.8rem; color: white; }
+
+.price-tag {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--cor-primaria); /* Verde Neon */
+    text-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+}
+
+/* 2. Grid de Cartões de Pagamento */
+.methods-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
+    gap: 15px;
+}
+
+.method-card {
+    background: linear-gradient(145deg, #2a2a2a, #222);
+    border: 1px solid #444;
+    border-radius: 15px;
+    padding: 30px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none; /* Remove sublinhado se for link */
+}
+
+/* Estilos Específicos por Cartão */
+.pix-card:hover { border-color: #32bcad; box-shadow: 0 0 20px rgba(50, 188, 173, 0.3); transform: translateY(-5px); }
+.credit-card:hover { border-color: #2979ff; box-shadow: 0 0 20px rgba(41, 121, 255, 0.3); transform: translateY(-5px); }
+.debit-card:hover { border-color: #ff9100; box-shadow: 0 0 20px rgba(255, 145, 0, 0.3); transform: translateY(-5px); }
+
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.pix-card i { color: #32bcad; }
+.credit-card i { color: #2979ff; }
+.debit-card i { color: #ff9100; }
+
+.method-card h4 { margin: 0; font-size: 1.2rem; font-weight: 800; }
+.method-card p { margin: 5px 0 0 0; font-size: 0.8rem; color: #888; }
+
+/* Botão Cancelar Discreto */
+.btn-cancelar {
+    display: block;
+    margin-top: 30px;
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+.btn-cancelar:hover { color: #fff; }
+
+
+/* 3. Overlay do PIX (Estilo Modal) */
+.pix-overlay {
+    position: fixed; /* Fica por cima de tudo */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); /* Fundo escuro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.pix-container {
+    background: #1e1e1e;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+.pix-logo { font-size: 3rem; color: #32bcad; margin-bottom: 10px; }
+
+.qr-wrapper {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 20px auto;
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+}
+
+.qr-code-img { width: 100%; height: 100%; }
+
+/* Efeito de Scanner (Linha descendo) */
+.scan-line {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 5px;
+    background: #32bcad;
+    box-shadow: 0 0 10px #32bcad;
+    animation: scan 2s infinite linear;
+}
+
+@keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+.pix-instruction { color: #ccc; margin-bottom: 20px; font-size: 1rem; }
+
+.btn-confirmar-pix {
+    background: #32bcad;
+    color: black;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.btn-voltar-pix {
+    background: transparent;
+    border: 1px solid #555;
+    color: #888;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.btn-voltar-pix:hover { border-color: white; color: white; }
+
+/* Responsividade para Celular */
+@media (max-width: 600px) {
+    .methods-grid { grid-template-columns: 1fr; } /* Um embaixo do outro no celular */
+    .payment-header { flex-direction: column; gap: 15px; }
+}

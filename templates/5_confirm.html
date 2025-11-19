@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sucesso</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta http-equiv="refresh" content="5;url=/recibo" />
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: var(--cor-primaria); font-size: 4rem;">✔</h1>
+        <h1>PAGAMENTO APROVADO!</h1>
+
+        <div style="background: var(--cor-primaria); color: black; padding: 30px; border-radius: 15px; margin-top: 30px;">
+            <h2>DIRIJA-SE À BAIA {{ baia }}</h2>
+            <p style="color: black; font-weight: bold;">A máquina foi liberada.</p>
+        </div>
+
+        <p style="margin-top: 30px;">Redirecionando para recibo em 5 segundos...</p>
+
+        <a href="/recibo" class="btn-zao btn-start">AVANÇAR AGORA</a>
+    </div>
+</body>
+</html>

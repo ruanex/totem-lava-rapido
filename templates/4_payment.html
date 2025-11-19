@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pagamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+
+        <div class="payment-header">
+            <div class="payment-info">
+                <p class="label">SERVIÇO</p>
+                <h3>{{ servico }}</h3>
+                <p class="sub-label"><i class="fa-solid fa-location-dot"></i> Baia {{ baia }}</p>
+            </div>
+            <div class="payment-total">
+                <p class="label">TOTAL A PAGAR</p>
+                <div class="price-tag">R$ {{ "%.2f"|format(valor) }}</div>
+            </div>
+        </div>
+
+        <div id="opcoes-pagamento">
+            <p style="margin: 30px 0 15px 0; opacity: 0.7;">SELECIONE O MÉTODO:</p>
+
+            <div class="methods-grid">
+                <div class="method-card pix-card" onclick="mostrarPix()">
+                    <div class="icon-circle">
+                        <i class="fa-brands fa-pix"></i>
+                    </div>
+                    <h4>PIX</h4>
+                    <p>QR Code Instantâneo</p>
+                </div>
+
+                <form action="/processar_pagamento" method="POST" style="display: contents;">
+
+                    <button type="submit" name="metodo" value="credito" class="method-card credit-card">
+                        <div class="icon-circle">
+                            <i class="fa-regular fa-credit-card"></i>
+                        </div>
+                        <h4>CRÉDITO</h4>
+                        <p>Inserir ou Aproximar</p>
+                    </button>
+
+                    <button type="submit" name="metodo" value="debito" class="method-card debit-card">
+                        <div class="icon-circle">
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+                        </div>
+                        <h4>DÉBITO</h4>
+                        <p>Inserir ou Aproximar</p>
+                    </button>
+                </form>
+            </div>
+
+            <a href="/baias" class="btn-cancelar">CANCELAR PEDIDO</a>
+        </div>
+
+        <div id="area-pix" class="pix-overlay" style="display:none;">
+            <div class="pix-container">
+                <i class="fa-brands fa-pix pix-logo"></i>
+                <h3>Escaneie para Pagar</h3>
+
+                <div class="qr-wrapper">
+                    <img src="{{ url_for('gerar_qrcode') }}" class="qr-code-img">
+                    <div class="scan-line"></div> </div>
+
+                <p class="pix-instruction">Abra o app do seu banco e escolha<br>"Pagar com Pix"</p>
+
+                <form action="/processar_pagamento" method="POST">
+                    <button type="submit" name="metodo" value="pix" class="btn-confirmar-pix">
+                        JÁ PAGUEI (SIMULAR)
+                    </button>
+                </form>
+
+                <button onclick="voltarOpcoes()" class="btn-voltar-pix">Escolher outro método</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function mostrarPix() {
+            document.getElementById('opcoes-pagamento').style.display = 'none';
+            document.getElementById('area-pix').style.display = 'flex';
+        }
+
+        function voltarOpcoes() {
+            document.getElementById('area-pix').style.display = 'none';
+            document.getElementById('opcoes-pagamento').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

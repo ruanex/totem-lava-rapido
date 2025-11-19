@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recibo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Deseja o comprovante?</h2>
+
+        <div class="grid-2">
+            <button class="btn-zao btn-opcao" onclick="alert('Imprimindo...')">🖨 IMPRIMIR</button>
+            <button class="btn-zao btn-opcao" onclick="alert('Enviado por e-mail!')">✉ E-MAIL / SMS</button>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <h1>OBRIGADO!</h1>
+            <p>Tenha um excelente dia.</p>
+        </div>
+
+        <a href="/" class="btn-zao btn-start" style="margin-top: 30px;">FINALIZAR (VOLTAR AO INÍCIO)</a>
+    </div>
+</body>
+</html>
